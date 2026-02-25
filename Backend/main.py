@@ -8,11 +8,12 @@ from db.database import create_tables
 create_tables()
 
 app = FastAPI(
-    titles="choose your own Adventure Game API",
-    description="api to generate cool stories",
+    title="Choose Your Own Adventure Game API",
+    description="API to generate cool stories",
     version="0.1.0",
     docs_url="/docs",
     redoc_url="/redoc",
+    root_path="/chooseyourownadventureaig/backend/v1.0",
 )
 
 app.add_middleware(
