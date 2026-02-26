@@ -5,3 +5,4 @@
  python-dotenv>=1.2.1
  sqlalchemy>=2.0.46
  uvicorn>=0.41.0
+ openai
