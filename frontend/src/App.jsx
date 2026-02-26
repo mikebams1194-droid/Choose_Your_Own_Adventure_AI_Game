@@ -1,8 +1,8 @@
 import './App.css'
-import { useState, useEffect } from 'react' // 1. Added Hooks
+import { useState, useEffect } from 'react' 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import { supabase } from './supabaseClient' // 2. Added Supabase Client
-import AuthPage from './components/AuthPage' // 3. Added Auth Component
+import { supabase } from './supabaseClient'
+import AuthPage from './components/AuthPage'
 import StoryLoader from './components/StoryLoader'
 import StoryGenerator from './components/StoryGenerator'
 
@@ -26,9 +26,13 @@ function App() {
   return (
     <Router>
       <div className="app-container">
+        {/* DEBUG HELLO WORLD */}
+        <div style={{ background: 'yellow', color: 'black', textAlign: 'center', padding: '5px' }}>
+          Hello World - The App is Rendering!
+        </div>
+
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem' }}>
           <h1>Interactive Story Generator</h1>
-          {/* Show Logout only if logged in */}
           {session && (
             <button 
               onClick={() => supabase.auth.signOut()} 
@@ -41,7 +45,6 @@ function App() {
         </header>
         
         <main>
-          {/* 4. The Gatekeeper Logic */}
           {!session ? (
             <AuthPage />
           ) : (
