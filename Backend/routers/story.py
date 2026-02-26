@@ -2,6 +2,7 @@ import uuid
 from typing import Optional
 from datetime import datetime
 from fastapi import APIRouter, Depends, HTTPException, Cookie, Response, BackgroundTasks
+from pydantic import UUID4
 from requests import Session
 from sqlalchemy.orm import Session
 
@@ -47,6 +48,7 @@ def create_story(
     response: Response,
     session_id: str = Depends(get_session_id),
     db: Session = Depends(get_db),
+    user_id=UUID4,
 ):
     response.set_cookie(key="session_id", value=session_id, httponly=True)
 

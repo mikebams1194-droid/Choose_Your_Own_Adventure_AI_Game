@@ -1,10 +1,10 @@
 from typing import List, Optional, Dict
 from datetime import datetime
-from pydantic import BaseModel
-from pydantic import UUID4
+from pydantic import BaseModel, UUID4
 
 
 class StoryBase(BaseModel):
+    prompt: str
     title: str
     user_id: Optional[UUID4] = None
 

@@ -2,7 +2,7 @@ from sqlalchemy import ForeignKey, Column, Integer, String, DateTime, Boolean, F
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 from sqlalchemy.dialects.postgresql import UUID
-
+import uuid
 from db.database import Base
 
 
@@ -13,6 +13,7 @@ class Story(Base):
     title = Column(String, index=True)
     session_id = Column(String, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    user_id = Column(UUID(as_uuid=True), nullable=True)
 
     nodes = relationship("StoryNode", back_populates="story")
 

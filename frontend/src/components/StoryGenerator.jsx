@@ -6,7 +6,7 @@ import LoadingStatus from "./LoadingStatus.jsx";
 import { API_BASE_URL } from "../utils.js";
 
 
-function StoryGenerator() {
+function StoryGenerator({session}) {
     const navigate = useNavigate()
     const [theme, setTheme] = useState("")
     const [jobId, setJobId] = useState(null)
@@ -36,7 +36,10 @@ function StoryGenerator() {
         setTheme(theme)
 
         try {
-            const response = await axios.post(`${API_BASE_URL}/stories/create`, {theme});
+            const response = await axios.post(`${API_BASE_URL}/stories/create`, {
+            theme, 
+            user_id: session?.user?.id
+        });
             const {job_id, status} = response.data
             setJobId(job_id)
             setJobStatus(status)
