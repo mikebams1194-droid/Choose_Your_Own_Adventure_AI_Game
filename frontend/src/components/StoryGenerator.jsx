@@ -29,7 +29,7 @@ function StoryGenerator({session}) {
             }
         }
     }, [jobId, jobStatus])
-
+    const API_URL = import.meta.env.VITE_API_URL;
     const generateStory = async (theme) => {
         setLoading(true)
         setError(null)
