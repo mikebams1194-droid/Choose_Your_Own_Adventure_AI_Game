@@ -15,17 +15,14 @@ app = FastAPI(
     redoc_url="/redoc",
     root_path="/chooseyourownadventureaig/backend/v1.0",
 )
-origins = [
-    "http://localhost:5173",  # For local development
-    "https://choose-your-own-adventure-ai-game-eaw95r26m.vercel.app",  # Your specific Vercel URL
-    # If you have a custom domain or a shorter Vercel link, add it here too!
-]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    expose_headers=["*"],
 )
 
 
