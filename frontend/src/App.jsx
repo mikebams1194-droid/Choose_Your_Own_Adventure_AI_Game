@@ -8,20 +8,36 @@ import StoryGenerator from './components/StoryGenerator'
 
 function App() {
   const [session, setSession] = useState(null)
+  const [loading, setLoading] = useState(true) // 1. Add a loading state
 
   useEffect(() => {
-    // Check for existing session
+    const timeout = setTimeout(() => setLoading(false), 5000);
+    
     supabase.auth.getSession().then(({ data: { session } }) => {
       setSession(session)
-    })
+      setLoading(false)
+      clearTimeout(timeout)
+    }).catch(err => {
+      console.error("Supabase connection failed:", err)
+      setLoading(false)
+    }
+    )
 
     // Listen for login/logout changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setSession(session)
+      setLoading(false)
     })
 
-    return () => subscription.unsubscribe()
+    return () => {
+      if (subscription) subscription.unsubscribe();
+      clearTimeout(timeout);
+    };
   }, [])
+
+  if (loading) {
+    return <div style={{ padding: '20px', textAlign: 'center' }}>Connecting to Adventure Engine...</div>
+  }
 
   return (
     <Router>
