@@ -20,6 +20,7 @@ class Story(Base):
 
 class StoryNode(Base):
     __tablename__ = "story_nodes"
+    __table_args__ = {"extend_existing": True}
 
     id = Column(Integer, primary_key=True, index=True)
     story_id = Column(Integer, ForeignKey("stories.id"), index=True)
@@ -34,7 +35,7 @@ class StoryNode(Base):
 
 class Story(Base):
     __tablename__ = "stories"
+    __table_args__ = {"extend_existing": True}
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String)
-    # ... your other columns ...
     user_id = Column(UUID(as_uuid=True), nullable=True)
