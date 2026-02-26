@@ -11,6 +11,25 @@ from models.job import StoryJob
 from schemas.story import CompleteStoryResponse, CompleteStoryNodeResponse, CreateStoryRequest
 from schemas.job import StoryJobResponse
 from core.story_generator import StoryGenerator
+import os
+from openai import OpenAI
+
+client = OpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+
+
+async def generate_image(prompt_description: str):
+    try:
+        response = client.images.generate(
+            model="dall-e-3",
+            prompt=f"Digital art style, cinematic adventure game scene: {prompt_description}",
+            size="1024x1024",
+            n=1,
+        )
+        return response.data[0].url
+    except Exception as e:
+        print(f"DALL-E Error: {e}")
+        return None
+
 
 router = APIRouter(prefix="/stories", tags=["stories"])
 
@@ -105,3 +124,13 @@ def build_complete_story_tree(db: Session, story: Story) -> CompleteStoryRespons
         root_node=node_dict[root_node.id],
         all_nodes=node_dict,
     )
+
+
+@router.post("/generate-scene-image")
+async def get_image(data: dict):
+    scene_text = data.get("scene_description")
+    if not scene_text:
+        return {"error": "No description provided"}
+
+    url = await generate_image(scene_text)
+    return {"image_url": url}
