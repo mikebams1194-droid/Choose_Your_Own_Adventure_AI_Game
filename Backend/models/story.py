@@ -1,6 +1,7 @@
 from sqlalchemy import ForeignKey, Column, Integer, String, DateTime, Boolean, ForeignKey, JSON
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
+from sqlalchemy.dialects.postgresql import UUID
 
 from db.database import Base
 
@@ -28,3 +29,11 @@ class StoryNode(Base):
     options = Column(JSON, default=list)
 
     story = relationship("Story", back_populates="nodes")
+
+
+class Story(Base):
+    __tablename__ = "stories"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    # ... your other columns ...
+    user_id = Column(UUID(as_uuid=True), nullable=True)
