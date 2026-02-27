@@ -100,6 +100,20 @@ def get_complete_story(story_id: int, db: Session = Depends(get_db)):
     return complete_story
 
 
+@router.get("/user/{session_id}")
+def get_user_stories(session_id: str, db: Session = Depends(get_db)):
+    stories = db.query(Story).filter(Story.session_id == session_id).order_by(Story.id.desc()).all()
+
+    return [
+        {
+            "id": s.id,
+            "title": s.title,
+            "created_at": s.created_at.isoformat() if s.created_at else None,
+        }
+        for s in stories
+    ]
+
+
 def build_complete_story_tree(db: Session, story: Story) -> CompleteStoryResponse:
     nodes = db.query(StoryNode).filter(StoryNode.story_id == story.id).all()
 
