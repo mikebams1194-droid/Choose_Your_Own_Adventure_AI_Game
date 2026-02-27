@@ -64,7 +64,7 @@ function App() {
             <>
               {/* FIX #3: Unified View Logic */}
               {view === 'library' ? (
-                <StoryList session={session} />
+                <StoryList session={session} setView={setView} />
               ) : (
                 <Routes>
                   {/* If a user clicks an old story in StoryList, navigate here */}
