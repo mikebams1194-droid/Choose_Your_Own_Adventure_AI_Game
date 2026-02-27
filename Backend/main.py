@@ -11,14 +11,15 @@ create_tables()
 app = FastAPI(title="Adventure Game API")
 
 origins = [
-    "http://localhost:5173",  # local dev
-    "https://choose-your-own-adventure-ai-game-994kbkt9g.vercel.app",  # production frontend
+    "https://choose-your-own-adventure-ai-game-994kbkt9g.vercel.app",
+    "http://localhost:5173",
+    # production frontend
 ]
 # 2. Add CORS Middleware IMMEDIATELY after initializing app
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,  # Using wildcard to force permission
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
