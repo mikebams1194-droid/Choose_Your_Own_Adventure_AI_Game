@@ -38,7 +38,7 @@ function StoryGenerator({session}) {
         try {
             const response = await axios.post(`${API_BASE_URL}/stories/create`, {
             theme, 
-            user_id: session?.user?.id
+            session_id: session?.user?.id
         });
             const {job_id, status} = response.data
             setJobId(job_id)
