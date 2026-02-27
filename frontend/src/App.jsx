@@ -45,7 +45,7 @@ function App() {
       <div className="app-container">
         {/* Header Section */}
         <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 2rem', background: '#222', color: 'white', flexWrap: 'wrap', minHeight: '70px' }}>
-          <h1>Adventure AI</h1>
+          <h1>Adventure Game</h1>
           {session && (
             <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
               {/* FIX #2: Navigation buttons inside the session check */}
