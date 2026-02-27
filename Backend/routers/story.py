@@ -46,20 +46,25 @@ def create_story(
     request: CreateStoryRequest,
     background_task: BackgroundTasks,
     response: Response,
-    session_id: str = Depends(get_session_id),
     db: Session = Depends(get_db),
-    user_id=UUID4,
+    # Remove session_id: str = Depends(get_session_id)
 ):
-    response.set_cookie(key="session_id", value=session_id, httponly=True)
+    # 1. Get the UID directly from the request body sent by React
+    actual_user_uid = request.session_id
+
+    if not actual_user_uid:
+        raise HTTPException(status_code=400, detail="No UID provided")
 
     job_id = str(uuid.uuid4())
 
-    job = StoryJob(job_id=job_id, session_id=session_id, theme=request.theme, status="pending")
+    # 2. Save the job using the REAL UID
+    job = StoryJob(job_id=job_id, session_id=actual_user_uid, theme=request.theme, status="pending")
     db.add(job)
     db.commit()
 
+    # 3. Pass that same UID to the background task
     background_task.add_task(
-        generate_story_task, job_id=job_id, theme=request.theme, session_id=session_id
+        generate_story_task, job_id=job_id, theme=request.theme, session_id=actual_user_uid
     )
 
     return job
