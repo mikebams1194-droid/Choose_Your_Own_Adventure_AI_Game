@@ -10,10 +10,16 @@ create_tables()
 # 1. Initialize FastAPI WITHOUT a root_path for now
 app = FastAPI(title="Adventure Game API")
 
+origins = [
+    "https://choose-your-own-adventu-git-e229da-mikebams1194-droids-projects.vercel.app",
+    "https://your-main-vercel-domain.vercel.app",
+    "http://localhost:3000",  # For local testing
+]
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Using wildcard to force permission
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )

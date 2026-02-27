@@ -3,12 +3,6 @@ from datetime import datetime
 from pydantic import BaseModel, UUID4
 
 
-class StoryBase(BaseModel):
-    prompt: str
-    title: str
-    user_id: Optional[UUID4] = None
-
-
 class StoryOptionsSchemas(BaseModel):
     text: str
     node_id: Optional[int] = None
@@ -38,6 +32,7 @@ class StoryBase(BaseModel):
 
 class CreateStoryRequest(BaseModel):
     theme: str
+    session_id: str
 
 
 class CompleteStoryResponse(StoryBase):
